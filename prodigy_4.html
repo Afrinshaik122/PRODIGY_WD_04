@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stefeny's Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f9; /* Subtle off-white for better contrast */
+            color: #333333; /* Dark grey text */
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 50px;
+            background-color: #4A90E2; /* Attractive blue header */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: 600;
+            color: #fff; /* White for better visibility */
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-right: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff; /* White for navigation links */
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #F5A623; /* Golden hover effect */
+        }
+
+        section {
+            padding: 100px 50px; /* Increased padding for sections */
+            text-align: center;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #4A90E2 0%, #50E3C2 100%); /* Blue to teal gradient */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .intro-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .intro-text p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #f0f0f0; /* Light grey text */
+        }
+
+        .download-btn {
+            padding: 15px 30px;
+            background-color: #F5A623; /* Golden button */
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .download-btn:hover {
+            background-color: #D48820; /* Darker gold */
+            transform: scale(1.05); /* Slight button zoom effect */
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: #fff; /* White for better contrast */
+        }
+
+        .about, .projects, .contact {
+            background: linear-gradient(135deg, #4A90E2 0%, #50E3C2 100%); /* Blue to teal gradient */
+            color: white; /* White text for contrast */
+            padding: 80px 0;
+        }
+
+        .about p, .contact p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .projects h2, .contact h2 {
+            margin-bottom: 40px;
+        }
+
+        .project-list {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .project {
+            background-color: #ffffff;
+            color: #333333; /* Dark text for readability on light background */
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: transform 0.3s;
+        }
+
+        .project:hover {
+            transform: translateY(-10px); /* Lift effect */
+        }
+
+        .project img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .project h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #4A90E2;
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4A90E2;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .project-link:hover {
+            background-color: #357ABD;
+        }
+
+        .contact {
+            background-color: #50E3C2;
+            color: white;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        form label {
+            margin: 10px 0;
+            color: white;
+        }
+
+        form input, form textarea {
+            width: 100%;
+            max-width: 500px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            padding: 15px 30px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        form button:hover {
+            background-color: #357ABD;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 20px;
+            }
+
+            .intro-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .project-list {
+                flex-direction: column;
+            }
+
+            form input, form textarea {
+                width: 90%;
+            }
+        }
+    </style>
+    <script>
+        function showAlert() {
+            alert("Message sent successfully!");
+            return true; // Allow the form to submit
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">A</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="intro-text">
+                <h1>Passionate Web Developer</h1>
+                <p>Hi, I'm afrin, a web developer excited to create dynamic and user-friendly websites. Let's build something amazing together!</p>
+                <a href="C:\Users\91824\Desktop\cv.pdf"class="download-btn">Download CV</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <h2>About Me</h2>
+        <p>Hello, I'm Shaik afrin, a web developer with a passion for creating engaging and user-friendly websites. I'm constantly learning and ready to tackle new challenges in web development!</p>
+    </section>
+
+    <section id="projects" class="projects">
+        <h2>My Projects</h2>
+        <div class="project-list">
+            <div class="project">
+                <img src="C:\Users\91824\Desktop\Screenshot.png" alt="Project Screenshot">
+                <h3>Connect 4 Game</h3>
+                <p>A strategy game where players compete to connect four discs in a row, either vertically, horizontally, or diagonally.</p>
+                <a href="C:\Users\91824\Desktop\GAME.HTML" class="project-link">View Project</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Contact Me</h2>
+        <form action="" method="post" onsubmit="return showAlert();">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+</body>
+</html>

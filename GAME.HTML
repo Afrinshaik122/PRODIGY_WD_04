@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect Four</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+
+    <style>
+        /* General body styles */
+        body {
+            background-color: #e9e7fd;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Main container for the game */
+        #main-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Styling the player indicator */
+        #player {
+            margin-bottom: 20px;
+        }
+
+        #player-type {
+            font-size: 2rem;
+            color: #333;
+        }
+
+        /* Grid styles for the Connect Four game */
+        #grid {
+            display: grid;
+            grid-template-columns: repeat(7, 60px);
+            grid-gap: 10px;
+        }
+
+        /* Button styles (each cell of the grid) */
+        .btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 2px solid #333;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Player 1 pieces */
+        .player1 {
+            background-color: #f94144;
+        }
+
+        /* Player 2 pieces */
+        .player2 {
+            background-color: #577590;
+        }
+
+        /* Reset button styles */
+        #reset-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f3722c;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        #reset-btn:hover {
+            background-color: #f94144;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-container">
+        <div id="player">
+            <h1 id="player-type">Player - 1</h1>
+        </div>
+
+        <div id="grid">
+            <!-- Dynamically generated grid of buttons -->
+        </div>
+
+        <button type="button" id="reset-btn">Play Again</button>
+    </div>
+
+    <script>
+        const grid = document.getElementById("grid");
+        const playerType = document.getElementById("player-type");
+        const resetBtn = document.getElementById("reset-btn");
+
+        const columns = 7;
+        const rows = 6;
+        let currentPlayer = 1;
+        let gameActive = true;
+        let gameState = Array(columns).fill().map(() => Array(rows).fill(0)); // 2D array representing the grid
+
+        // Function to create the game grid
+        function createGrid() {
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < columns; col++) {
+                    const btn = document.createElement("button");
+                    btn.classList.add("btn");
+                    btn.dataset.column = col;
+                    btn.addEventListener("click", handleButtonClick);
+                    grid.appendChild(btn);
+                }
+            }
+        }
+
+        // Function to handle button clicks
+        function handleButtonClick(event) {
+            if (!gameActive) return;
+
+            const col = event.target.dataset.column;
+            for (let row = rows - 1; row >= 0; row--) {
+                if (gameState[col][row] === 0) {
+                    gameState[col][row] = currentPlayer;
+                    event.target.classList.add(currentPlayer === 1 ? "player1" : "player2");
+
+                    if (checkForWin(col, row)) {
+                        setTimeout(() => {
+                            alert(`Player ${currentPlayer} wins!`);
+                            resetGame();
+                        }, 100); // Delay to show winning piece
+                        gameActive = false;
+                    } else {
+                        switchPlayer();
+                    }
+                    break;
+                }
+            }
+        }
+
+        // Switch between Player 1 and Player 2
+        function switchPlayer() {
+            currentPlayer = currentPlayer === 1 ? 2 : 1;
+            playerType.textContent = `Player - ${currentPlayer}`;
+        }
+
+        // Check for a win
+        function checkForWin(col, row) {
+            return checkDirection(col, row, 1, 0) ||  // Check horizontal
+                   checkDirection(col, row, 0, 1) ||  // Check vertical
+                   checkDirection(col, row, 1, 1) ||  // Check diagonal (top-left to bottom-right)
+                   checkDirection(col, row, 1, -1);   // Check diagonal (bottom-left to top-right)
+        }
+
+        function checkDirection(col, row, colChange, rowChange) {
+            let count = 1;
+
+            // Check in one direction
+            count += countPieces(col, row, colChange, rowChange);
+            // Check in the opposite direction
+            count += countPieces(col, row, -colChange, -rowChange);
+
+            return count >= 4;  // Win condition: 4 pieces in a row
+        }
+
+        function countPieces(col, row, colChange, rowChange) {
+            let count = 0;
+            let player = currentPlayer;
+
+            for (let i = 1; i < 4; i++) {
+                const newCol = parseInt(col) + colChange * i;
+                const newRow = row + rowChange * i;
+
+                if (newCol >= 0 && newCol < columns && newRow >= 0 && newRow < rows && gameState[newCol][newRow] === player) {
+                    count++;
+                } else {
+                    break;
+                }
+            }
+            return count;
+        }
+
+        // Reset game
+        resetBtn.addEventListener("click", resetGame);
+
+        function resetGame() {
+            grid.innerHTML = '';
+            playerType.textContent = 'Player - 1';
+            currentPlayer = 1;
+            gameActive = true;
+            gameState = Array(columns).fill().map(() => Array(rows).fill(0));
+            createGrid();
+        }
+
+        // Initialize the game
+        createGrid();
+    </script>
+
+</body>
+</html>
